@@ -10,63 +10,73 @@ import org.springframework.boot.test.context.SpringBootTest
 internal class WordCounterServiceTest(@Autowired val service: WordCounterService) {
 
     @Test
-    fun `count empty message, count 0`() {
+    fun `getWordCount empty text, count 0`() {
         // given
-        val message = Message(1, "")
+        val text = ""
 
         // when
-        val result = service.countWords(message)
+        val result = service.getWordCount(text)
 
         // then
         assertEquals(0, result)
     }
 
     @Test
-    fun `count one word message, count 1`() {
+    fun `getWordCount one word text, count 1`() {
         // given
-        val message = Message(123, "message")
+        val text = "text"
 
         // when
-        val result = service.countWords(message)
+        val result = service.getWordCount(text)
 
         // then
         assertEquals(1, result)
     }
 
     @Test
-    fun `count two word message, count 2`() {
+    fun `getWordCount two word text, count 2`() {
         // given
-        val message = Message(123, "hello world")
+        val text = "hello world"
 
         // when
-        val result = service.countWords(message)
+        val result = service.getWordCount(text)
 
         // then
         assertEquals(2, result)
     }
 
     @Test
-    fun `count large message with special characters, count 24`() {
+    fun `getWordCount large text with special characters, count 24`() {
         // given
         val text = """
                 @Test
-                fun `count two word message, count 2`() {
+                fun `getWordCount two word text, count 2`() {
                     // given
-                    val message = Message(123, "hello world")
+                    val text = text(123, "hello world")
 
                     // when
-                    val result = service.countWords(message)
+                    val result = service.countWords(text)
 
                     assertEquals(2, result)
                 }
         """.trimIndent()
 
-        val message = Message(123, text)
-
         // when
-        val result = service.countWords(message)
+        val result = service.getWordCount(text)
 
         // then
         assertEquals(24, result)
+    }
+    
+    @Test
+    fun `countWordsInMessage happy path, converts count to Long`() {
+        // given
+        val message = Message(123,"hello world")
+
+        // when
+        val result = service.countWordsInMessage(message)
+
+        // then
+        assertEquals(2L, result)
     }
 }

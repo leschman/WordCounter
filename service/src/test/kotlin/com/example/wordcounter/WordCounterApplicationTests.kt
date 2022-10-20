@@ -22,7 +22,7 @@ class WordCounterApplicationTests(@LocalServerPort val port: Int) {
 			.decoder(JacksonDecoder(mapper()))
 			.target(WordCounterClient::class.java, "http://localhost:$port")
 
-		assertEquals(1, client.sendMessage(Message(1, "message")).count)
+		assertEquals(2, client.sendMessage(Message(123, "hello world")).count)
 	}
 
 	private fun mapper(): ObjectMapper {

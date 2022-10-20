@@ -8,8 +8,12 @@ class WordCounterService {
     val whiteSpaceRegex = "\\s+".toRegex()
     val nonWordRegex = "\\W".toRegex()
 
-    fun countWords(message: Message): Int {
-         return message.message
+    fun countWordsInMessage(message: Message): Long {
+        return getWordCount(message.message).toLong()
+    }
+
+    fun getWordCount(text: String): Int {
+         return text
              .replace(nonWordRegex, " ")
              .trim()
              .split(whiteSpaceRegex)
