@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.14.RELEASE"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
+    id("org.flywaydb.flyway") version "8.5.13"
 }
 
 group = "com.example"
@@ -43,4 +44,11 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+flyway {
+    url = "jdbc:h2:file:./temp/db"
+    user = "sa"
+    password = "password"
+    schemas = arrayOf("WORD_COUNTER")
 }
