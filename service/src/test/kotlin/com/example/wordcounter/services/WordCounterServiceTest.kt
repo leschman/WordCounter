@@ -3,11 +3,20 @@ package com.example.wordcounter.services
 import com.example.wordcounter.models.Message
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.kotlin.inOrder
+import org.mockito.kotlin.whenever
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-internal class WordCounterServiceTest(@Autowired val service: WordCounterService) {
+internal class WordCounterServiceTest {
+
+    @Mock
+    lateinit var messageService: MessageService
+
+    @InjectMocks
+    lateinit var service: WordCounterService
 
     @Test
     fun `getWordCount empty text, count 0`() {
@@ -69,14 +78,18 @@ internal class WordCounterServiceTest(@Autowired val service: WordCounterService
     }
     
     @Test
-    fun `countWordsInMessage happy path, converts count to Long`() {
+    fun `saveMessageAndGetWordCount happy path, calls expected services`() {
         // given
         val message = Message(123,"hello world")
+        whenever(messageService.sumWords()).thenReturn(3L)
 
         // when
-        val result = service.countWordsInMessage(message)
+        val result = service.saveMessageAndGetWordCount(message)
 
         // then
-        assertEquals(2L, result)
+        assertEquals(3L, result)
+        val inOrder = inOrder(messageService)
+        inOrder.verify(messageService).saveMessage(message, 2)
+        inOrder.verify(messageService).sumWords()
     }
 }

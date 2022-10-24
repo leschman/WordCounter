@@ -21,10 +21,14 @@ dependencies {
 
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.flywaydb:flyway-core")
     implementation("io.github.microutils", "kotlin-logging", "2.1.23")
     implementation(project(":word-counter-domain"))
+
+    runtimeOnly("com.h2database", "h2")
 
     testImplementation(project(":word-counter-client"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -33,6 +37,7 @@ dependencies {
     testImplementation("io.github.openfeign", "feign-jackson", "10.7.0")
     testImplementation("io.github.openfeign", "feign-httpclient", "10.7.0")
     testImplementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
+    testImplementation("org.mockito.kotlin", "mockito-kotlin", "4.0.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -47,7 +52,7 @@ tasks.withType<Test> {
 }
 
 flyway {
-    url = "jdbc:h2:file:./temp/db"
+    url = "jdbc:h2:file:./data/db"
     user = "sa"
     password = "password"
     schemas = arrayOf("WORD_COUNTER")
