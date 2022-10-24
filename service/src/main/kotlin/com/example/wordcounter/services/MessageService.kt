@@ -20,7 +20,7 @@ class MessageService(
      */
     fun saveMessage(message: Message, wordCount: Int) {
         try {
-            messageRepository.saveAndFlush(PersistentMessage(message.message, wordCount, message.id))
+            messageRepository.saveAndFlush(PersistentMessage(wordCount, message.id))
         } catch ( e: DataIntegrityViolationException) {
             // Log but ignore if duplicate messages are received.
             log.info("Rejecting message with duplicate message id: ${message.id}")

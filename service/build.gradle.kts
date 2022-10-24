@@ -27,6 +27,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("io.github.microutils", "kotlin-logging", "2.1.23")
     implementation(project(":word-counter-domain"))
+    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
 
     runtimeOnly("com.h2database", "h2")
 
@@ -36,7 +37,6 @@ dependencies {
     testImplementation("io.github.openfeign", "feign-core", "10.7.0")
     testImplementation("io.github.openfeign", "feign-jackson", "10.7.0")
     testImplementation("io.github.openfeign", "feign-httpclient", "10.7.0")
-    testImplementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
     testImplementation("org.mockito.kotlin", "mockito-kotlin", "4.0.0")
 }
 

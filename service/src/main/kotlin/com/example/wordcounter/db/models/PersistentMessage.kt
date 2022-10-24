@@ -5,8 +5,6 @@ import javax.persistence.*
 @Entity
 @Table(name = "messages")
 open class PersistentMessage() {
-    @Column(name ="message",nullable = false)
-    open var message: String? = null
 
     @get: Column(name = "word_count", nullable = false)
     open var wordCount: Int? = null
@@ -19,8 +17,7 @@ open class PersistentMessage() {
     @get: Column(name = "id", nullable = true)
     open var id: Long? = null
 
-    constructor(message: String?, wordCount: Int?, messageId: Int?) : this() {
-        this.message = message
+    constructor(wordCount: Int?, messageId: Int?) : this() {
         this.wordCount = wordCount
         this.messageId = messageId
     }
